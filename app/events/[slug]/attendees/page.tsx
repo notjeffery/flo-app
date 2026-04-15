@@ -28,8 +28,10 @@ export default function AttendeesPage() {
         .select('user_id, users(id, first_name, last_name, username)')
         .eq('event_id', params.slug)
 
-      const users = data?.map(d => d.users).filter(Boolean) as Attendee[]
-      setAttendees(users || [])
+      const users: Attendee[] = data
+        ?.map(d => d.users)
+        .filter((user): user is Attendee => Boolean(user)) || []
+      setAttendees(users)
     } catch (err) {
       console.error(err)
     } finally {
