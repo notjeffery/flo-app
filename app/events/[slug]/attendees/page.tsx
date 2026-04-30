@@ -22,16 +22,17 @@ export default function AttendeesPage() {
 
   const fetchAttendees = async () => {
     try {
-      // Get all users interested in this event
       const { data } = await supabase
         .from('interests')
         .select('user_id, users(id, first_name, last_name, username)')
         .eq('event_id', params.slug)
 
-      const users: Attendee[] = data
-        ?.map(d => d.users)
-        .filter((user): user is Attendee => Boolean(user)) || []
-      setAttendees(users)
+      if (data) {
+        const users = data
+          .map((d: any) => d.users)
+          .filter((u: any) => u !== null) as Attendee[]
+        setAttendees(users)
+      }
     } catch (err) {
       console.error(err)
     } finally {
