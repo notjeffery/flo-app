@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { EVENTS } from '@/lib/events'
+import BottomNav from '../components/BottomNav'
 
 const TABS = ['Explore', 'Following', 'For You']
 
@@ -64,6 +65,7 @@ export default function FeedPage() {
           </Link>
         ))}
       </main>
+      <BottomNav />
     </div>
   )
 }

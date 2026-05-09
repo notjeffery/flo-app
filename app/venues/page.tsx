@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { VENUES } from '@/lib/venues'
+import BottomNav from '../components/BottomNav'
 
 const FILTERS = ['All', 'Nightclub', 'Lounge', 'Beach Club', 'Beach']
 
@@ -52,6 +53,7 @@ export default function VenuesPage() {
           ))}
         </div>
       </main>
+      <BottomNav />
     </div>
   )
 }
