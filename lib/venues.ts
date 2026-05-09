@@ -76,5 +76,97 @@ export const VENUES = [
       { id: 't3', section: 'Regular', number: 3, capacity: 6, price: 220000, available: true },
       { id: 't4', section: 'Regular', number: 4, capacity: 6, price: 220000, available: true },
     ]
-  }
+  },
+  {
+    id: '5',
+    slug: 'bayrock',
+    name: 'Bayrock',
+    type: 'Nightclub',
+    description: 'Where the real party people gather. Premium nightlife experience curated by Yhemolee.',
+    address: 'Victoria Island, Lagos',
+    cover: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800',
+    logo: 'https://images.unsplash.com/photo-1549213783-8284d0336c4f?w=200',
+    followers: 22100,
+    instagram: '@bayrock.ng',
+    tables: [
+      { id: 't1', section: 'VIP', number: 1, capacity: 10, price: 600000, available: true },
+      { id: 't2', section: 'VIP', number: 2, capacity: 10, price: 600000, available: true },
+      { id: 't3', section: 'VIP', number: 3, capacity: 8, price: 500000, available: false },
+      { id: 't4', section: 'Regular', number: 4, capacity: 6, price: 300000, available: true },
+      { id: 't5', section: 'Regular', number: 5, capacity: 6, price: 300000, available: true },
+      { id: 't6', section: 'Regular', number: 6, capacity: 4, price: 250000, available: true },
+    ]
+  },
+  {
+    id: '6',
+    slug: 'landmark-beach',
+    name: 'Landmark Beach',
+    type: 'Beach',
+    description: 'Iconic Lagos beach destination with events, food, and activities.',
+    address: 'Victoria Island, Lagos',
+    cover: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
+    logo: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=200',
+    followers: 45600,
+    instagram: '@landmarkbeach',
+    tables: [
+      { id: 't1', section: 'Beachfront Cabana', number: 1, capacity: 12, price: 350000, available: true },
+      { id: 't2', section: 'Beachfront Cabana', number: 2, capacity: 10, price: 300000, available: true },
+      { id: 't3', section: 'Regular', number: 3, capacity: 8, price: 200000, available: false },
+      { id: 't4', section: 'Regular', number: 4, capacity: 6, price: 150000, available: true },
+    ]
+  },
+  {
+    id: '7',
+    slug: 'noks',
+    name: 'NOK by Alara',
+    type: 'Lounge',
+    description: 'Luxury dining and lounge experience. Art, culture, and premium vibes.',
+    address: 'Victoria Island, Lagos',
+    cover: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800',
+    logo: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=200',
+    followers: 18300,
+    instagram: '@nokbyalara',
+    tables: [
+      { id: 't1', section: 'VIP Lounge', number: 1, capacity: 8, price: 400000, available: true },
+      { id: 't2', section: 'VIP Lounge', number: 2, capacity: 6, price: 350000, available: true },
+      { id: 't3', section: 'Regular', number: 3, capacity: 4, price: 200000, available: true },
+    ]
+  },
+  {
+    id: '8',
+    slug: 'cavalli',
+    name: 'Cavalli Club Lagos',
+    type: 'Nightclub',
+    description: 'Opulent nightclub experience. International luxury meets Lagos energy.',
+    address: 'Victoria Island, Lagos',
+    cover: 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800',
+    logo: 'https://images.unsplash.com/photo-1569124589354-615739ae007b?w=200',
+    followers: 31200,
+    instagram: '@cavallilagos',
+    tables: [
+      { id: 't1', section: 'Diamond VIP', number: 1, capacity: 12, price: 800000, available: false },
+      { id: 't2', section: 'Diamond VIP', number: 2, capacity: 10, price: 700000, available: true },
+      { id: 't3', section: 'VIP', number: 3, capacity: 8, price: 550000, available: true },
+      { id: 't4', section: 'VIP', number: 4, capacity: 8, price: 550000, available: true },
+      { id: 't5', section: 'Regular', number: 5, capacity: 6, price: 350000, available: true },
+    ]
+  },
+  {
+    id: '9',
+    slug: 'rhapsodys',
+    name: 'Rhapsodys',
+    type: 'Nightclub',
+    description: 'Live music and premium nightlife. Where vibes meet luxury.',
+    address: 'Victoria Island, Lagos',
+    cover: 'https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?w=800',
+    logo: 'https://images.unsplash.com/photo-1574391884720-bbc3740c59d1?w=200',
+    followers: 12400,
+    instagram: '@rhapsodyslagos',
+    tables: [
+      { id: 't1', section: 'VIP', number: 1, capacity: 8, price: 450000, available: true },
+      { id: 't2', section: 'VIP', number: 2, capacity: 6, price: 400000, available: false },
+      { id: 't3', section: 'Regular', number: 3, capacity: 6, price: 280000, available: true },
+      { id: 't4', section: 'Regular', number: 4, capacity: 4, price: 220000, available: true },
+    ]
+  },
 ]
