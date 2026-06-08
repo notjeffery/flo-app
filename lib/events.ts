@@ -1,5 +1,25 @@
 export const EVENTS = [
   {
+    id: '0',
+    slug: 'vice-party',
+    name: 'Vice Party',
+    venue: 'Balmoral Convention Centre',
+    address: 'Victoria Island, Lagos',
+    date: '2026-05-31',
+    time: '21:00',
+    price: null,
+    type: 'Rave',
+    genre: 'Afrobeats',
+    description: 'Lagos biggest party experience. Hosted by Yhemolee. An unforgettable night of music, vibes and premium entertainment.',
+    image: '/events/Vice_Party_2.jpeg',
+    images: [
+      '/events/Vice_Party_2.jpeg',
+      '/events/Vice_Party.jpeg',
+      '/events/Vice_Party_3.jpeg',
+    ],
+    video: '/events/Vice_Party_Video.mp4',
+  },
+  {
     id: '1',
     slug: 'inner-circle',
     name: 'Inner Circle Lunar Edition',
