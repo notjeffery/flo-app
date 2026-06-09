@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 const PAYMENT_METHODS = [
   {
@@ -26,13 +26,68 @@ const PAYMENT_METHODS = [
   },
 ]
 
+const HOTELS = [
+  {
+    id: '1',
+    name: 'Eko Hotel & Suites',
+    distance: '2 mins from venue',
+    price: 85000,
+    rating: '4.8',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+    tag: 'Most Popular'
+  },
+  {
+    id: '2',
+    name: 'Federal Palace Hotel',
+    distance: '5 mins from venue',
+    price: 65000,
+    rating: '4.6',
+    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400',
+    tag: 'Best Value'
+  },
+  {
+    id: '3',
+    name: 'Intercontinental Lagos',
+    distance: '8 mins from venue',
+    price: 120000,
+    rating: '4.9',
+    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400',
+    tag: 'Premium'
+  },
+]
+
+const CONCIERGE = [
+  {
+    id: '1',
+    name: 'Private Driver',
+    description: 'Luxury car pickup & drop off',
+    price: 25000,
+    icon: '🚗'
+  },
+  {
+    id: '2',
+    name: 'VIP Bottle Service',
+    description: 'Pre-order your bottles',
+    price: 150000,
+    icon: '🍾'
+  },
+  {
+    id: '3',
+    name: 'Event Photographer',
+    description: 'Personal photographer for the night',
+    price: 50000,
+    icon: '📸'
+  },
+]
+
 export default function CheckoutPage() {
   const router = useRouter()
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [selectedHotel, setSelectedHotel] = useState<string | null>(null)
+  const [selectedConcierge, setSelectedConcierge] = useState<string[]>([])
 
-  // Mock booking details - in real app these come from URL params
   const booking = {
     venue: 'Quilox',
     table: 'VIP Table 1',
@@ -46,40 +101,154 @@ export default function CheckoutPage() {
   const handlePayment = async () => {
     if (!selectedMethod) return
     setLoading(true)
-    // Mock payment processing
     setTimeout(() => {
       setLoading(false)
       setSuccess(true)
     }, 2000)
   }
 
+  const toggleConcierge = (id: string) => {
+    setSelectedConcierge(prev =>
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    )
+  }
+
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6">
-        <div className="text-center">
-          <div className="text-6xl mb-6">🎉</div>
-          <h1 className="text-3xl font-bold mb-4">Booking Confirmed!</h1>
-          <p className="text-gray-400 mb-2">{booking.venue}</p>
-          <p className="text-gray-400 mb-2">{booking.table}</p>
-          <p className="text-gray-400 mb-8">{booking.date}</p>
-          <div className="bg-gray-900 rounded-xl p-4 mb-8 text-left">
-            <p className="text-sm text-gray-400 mb-1">Booking Reference</p>
-            <p className="font-bold text-lg">#FLO{Math.floor(Math.random() * 100000)}</p>
+      <div className="min-h-screen pb-20">
+        <header className="sticky top-0 bg-black border-b border-gray-800 px-6 py-4">
+          <h1 className="text-xl font-bold">Booking Confirmed!</h1>
+        </header>
+
+        <main className="px-6 py-6 space-y-8">
+          {/* Success Banner */}
+          <div className="text-center py-6">
+            <div className="text-6xl mb-4">🎉</div>
+            <h2 className="text-2xl font-bold mb-2">You're in!</h2>
+            <p className="text-gray-400 mb-1">{booking.venue} · {booking.table}</p>
+            <p className="text-gray-400">{booking.date}</p>
+            <div className="bg-gray-900 rounded-xl p-4 mt-4 inline-block">
+              <p className="text-sm text-gray-400">Booking Reference</p>
+              <p className="font-bold text-lg">#FLO{Math.floor(Math.random() * 100000)}</p>
+            </div>
           </div>
-          <button
-            onClick={() => router.push('/feed')}
-            className="w-full px-6 py-4 bg-white text-black rounded-lg font-semibold"
-          >
-            Back to Feed
-          </button>
-        </div>
+
+          {/* Complete Your Night */}
+          <div>
+            <h2 className="text-xl font-bold mb-1">Complete Your Night 🔑</h2>
+            <p className="text-sm text-gray-400 mb-4">
+              Flo recommends the best hotels and services near your venue
+            </p>
+
+            {/* Hotel Recommendations */}
+            <h3 className="text-sm font-semibold text-gray-400 uppercase mb-3">
+              Hotels Near {booking.venue}
+            </h3>
+            <div className="space-y-3 mb-6">
+              {HOTELS.map(hotel => (
+                <button
+                  key={hotel.id}
+                  onClick={() => setSelectedHotel(
+                    selectedHotel === hotel.id ? null : hotel.id
+                  )}
+                  className={`w-full text-left rounded-xl overflow-hidden border-2 transition ${
+                    selectedHotel === hotel.id
+                      ? 'border-white'
+                      : 'border-transparent'
+                  }`}
+                >
+                  <img
+                    src={hotel.image}
+                    alt={hotel.name}
+                    className="w-full h-36 object-cover"
+                  />
+                  <div className={`p-4 ${selectedHotel === hotel.id ? 'bg-white text-black' : 'bg-gray-900'}`}>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className={`text-xs px-2 py-1 rounded mb-2 inline-block ${
+                          selectedHotel === hotel.id
+                            ? 'bg-black text-white'
+                            : 'bg-gray-800 text-gray-400'
+                        }`}>
+                          {hotel.tag}
+                        </span>
+                        <h4 className="font-bold">{hotel.name}</h4>
+                        <p className={`text-sm ${selectedHotel === hotel.id ? 'text-gray-600' : 'text-gray-400'}`}>
+                          📍 {hotel.distance}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold">₦{hotel.price.toLocaleString()}</p>
+                        <p className={`text-xs ${selectedHotel === hotel.id ? 'text-gray-600' : 'text-gray-400'}`}>
+                          per night
+                        </p>
+                        <p className="text-sm">⭐ {hotel.rating}</p>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Concierge Services */}
+            <h3 className="text-sm font-semibold text-gray-400 uppercase mb-3">
+              Concierge Services
+            </h3>
+            <div className="space-y-3 mb-6">
+              {CONCIERGE.map(service => (
+                <button
+                  key={service.id}
+                  onClick={() => toggleConcierge(service.id)}
+                  className={`w-full text-left rounded-xl p-4 border-2 transition ${
+                    selectedConcierge.includes(service.id)
+                      ? 'border-white bg-white text-black'
+                      : 'border-transparent bg-gray-900'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{service.icon}</span>
+                      <div>
+                        <p className="font-bold">{service.name}</p>
+                        <p className={`text-sm ${
+                          selectedConcierge.includes(service.id)
+                            ? 'text-gray-600'
+                            : 'text-gray-400'
+                        }`}>
+                          {service.description}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="font-bold">₦{service.price.toLocaleString()}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Add to booking button */}
+            {(selectedHotel || selectedConcierge.length > 0) && (
+              <button
+                onClick={() => router.push('/feed')}
+                className="w-full px-6 py-4 bg-white text-black rounded-lg font-bold text-lg mb-3"
+              >
+                Add to My Night 🔑
+              </button>
+            )}
+
+            <button
+              onClick={() => router.push('/feed')}
+              className="w-full px-6 py-4 bg-gray-900 text-white rounded-lg font-semibold"
+            >
+              Back to Feed
+            </button>
+          </div>
+        </main>
       </div>
     )
   }
 
   return (
     <div className="min-h-screen pb-20">
-      {/* Header */}
       <header className="sticky top-0 bg-black border-b border-gray-800 px-6 py-4 flex items-center gap-4">
         <button onClick={() => router.back()} className="text-2xl">←</button>
         <h1 className="text-xl font-bold">Checkout</h1>
@@ -106,7 +275,7 @@ export default function CheckoutPage() {
               <span className="text-gray-400">Date</span>
               <span className="font-semibold">{booking.date}</span>
             </div>
-            <div className="border-t border-gray-700 pt-3 mt-3">
+            <div className="border-t border-gray-700 pt-3">
               <div className="flex justify-between">
                 <span className="text-gray-400">Table Price</span>
                 <span>₦{booking.price.toLocaleString()}</span>
@@ -142,7 +311,11 @@ export default function CheckoutPage() {
                     <span className="text-2xl">{method.icon}</span>
                     <div>
                       <p className="font-bold">{method.name}</p>
-                      <p className={`text-sm ${selectedMethod === method.id ? 'text-gray-600' : 'text-gray-400'}`}>
+                      <p className={`text-sm ${
+                        selectedMethod === method.id
+                          ? 'text-gray-600'
+                          : 'text-gray-400'
+                      }`}>
                         {method.description}
                       </p>
                     </div>
@@ -156,7 +329,6 @@ export default function CheckoutPage() {
                   </span>
                 </div>
 
-                {/* Crypto wallet input */}
                 {selectedMethod === 'crypto' && method.id === 'crypto' && (
                   <div className="mt-4 space-y-3" onClick={e => e.stopPropagation()}>
                     <div>
@@ -182,7 +354,6 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        {/* Pay Button */}
         <button
           onClick={handlePayment}
           disabled={!selectedMethod || loading}
