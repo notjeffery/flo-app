@@ -17,7 +17,7 @@ export const EVENTS = [
       'https://res.cloudinary.com/dvhb8peji/image/upload/v1781479808/Vice_Party_2_hjbppr.jpg',
       'https://res.cloudinary.com/dvhb8peji/image/upload/v1781479838/Vice_Party_3_qkpsex.jpg',
     ],
-    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479721/Vice_Party_Video_sg2eno.mp4',
+    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479721/Vice_Party_Video_sg2eno.mp4',
   },
   {
     id: '1',
@@ -31,8 +31,8 @@ export const EVENTS = [
     type: 'Rave',
     genre: 'Afrobeats/House',
     description: 'The biggest block party on the mainland. Good music, good people, unmatched energy.',
-    image: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479578/mainland-block-party_koizdy.mp4',
-    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479578/mainland-block-party_koizdy.mp4',
+    image: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479578/mainland-block-party_koizdy.mp4',
+    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479578/mainland-block-party_koizdy.mp4',
   },
   {
     id: '2',
@@ -46,8 +46,8 @@ export const EVENTS = [
     type: 'Rave',
     genre: 'Afro-House/Deep House',
     description: 'Lagos most talked about underground rave. No tables, no hierarchy - just pure music and energy.',
-    image: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479528/group-therapy_tg2uxw.mp4',
-    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479528/group-therapy_tg2uxw.mp4',
+    image: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479528/group-therapy_tg2uxw.mp4',
+    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479528/group-therapy_tg2uxw.mp4',
   },
   {
     id: '3',
@@ -65,7 +65,7 @@ export const EVENTS = [
     images: [
       'https://res.cloudinary.com/dvhb8peji/image/upload/v1781479476/element-house_cimy8n.jpg',
     ],
-    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479429/element-house_sp7aca.mp4',
+    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479429/element-house_sp7aca.mp4',
   },
   {
     id: '4',
@@ -79,8 +79,8 @@ export const EVENTS = [
     type: 'Rave',
     genre: 'Afrobeats/House',
     description: 'An exclusive purple-themed rave experience. Premium vibes, curated sounds and an unforgettable atmosphere.',
-    image: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479668/purple_wn32yh.mp4',
-    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/v1781479668/purple_wn32yh.mp4',
+    image: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479668/purple_wn32yh.mp4',
+    video: 'https://res.cloudinary.com/dvhb8peji/video/upload/q_auto,f_auto/v1781479668/purple_wn32yh.mp4',
   },
   {
     id: '5',

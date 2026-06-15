@@ -52,7 +52,7 @@ function EventSlide({ event }: { event: Event }) {
         <video
           src={event.video}
           className="absolute inset-0 w-full h-full object-cover"
-          autoPlay muted loop playsInline
+          autoPlay muted loop playsInline preload="auto"
         />
       ) : (
         <img
