@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { VENUES } from '@/lib/venues'
 import BottomNav from '../components/BottomNav'
 
@@ -9,18 +10,47 @@ const FILTERS = ['All', 'Nightclub', 'Lounge', 'Beach Club', 'Beach']
 function VenueSlide({ venue }: { venue: any }) {
   const router = useRouter()
   const [following, setFollowing] = useState(false)
+  const [imgIndex, setImgIndex] = useState(0)
+
+  const images = venue.images || [venue.cover]
 
   return (
     <div className="relative w-full h-screen flex-shrink-0 snap-start overflow-hidden bg-black">
-      {/* Full screen video */}
-      <video
-        src={venue.video}
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+
+      {/* Show video if available, otherwise show image */}
+      {venue.video ? (
+        <video
+          src={venue.video}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay muted loop playsInline
+          poster={venue.cover}
+        />
+      ) : (
+        <>
+          <img
+            src={images[imgIndex]}
+            alt={venue.name}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={() => setImgIndex(prev => (prev - 1 + images.length) % images.length)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 text-white w-8 h-8 rounded-full flex items-center justify-center z-10"
+              >‹</button>
+              <button
+                onClick={() => setImgIndex(prev => (prev + 1) % images.length)}
+                className="absolute right-14 top-1/2 -translate-y-1/2 bg-black/40 text-white w-8 h-8 rounded-full flex items-center justify-center z-10"
+              >›</button>
+              <div className="absolute top-20 left-0 right-0 flex justify-center gap-1 z-10">
+                {images.map((_: any, i: number) => (
+                  <div key={i} className={`h-1 rounded-full transition-all ${i === imgIndex ? 'w-6 bg-white' : 'w-2 bg-white/40'}`} />
+                ))}
+              </div>
+            </>
+          )}
+        </>
+      )}
 
       {/* Gradients */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
@@ -28,28 +58,19 @@ function VenueSlide({ venue }: { venue: any }) {
 
       {/* Right actions */}
       <div className="absolute right-3 bottom-36 flex flex-col items-center gap-5 z-10">
-        <button
-          onClick={() => setFollowing(!following)}
-          className="flex flex-col items-center gap-1"
-        >
+        <button onClick={() => setFollowing(!following)} className="flex flex-col items-center gap-1">
           <div className={`text-3xl transition ${following ? 'scale-125' : ''}`}>
             {following ? '❤️' : '🤍'}
           </div>
           <span className="text-xs text-white">{following ? 'Following' : 'Follow'}</span>
         </button>
 
-        <button
-          onClick={() => router.push(`/venues/${venue.slug}`)}
-          className="flex flex-col items-center gap-1"
-        >
+        <button onClick={() => router.push(`/venues/${venue.slug}`)} className="flex flex-col items-center gap-1">
           <div className="text-3xl">🪑</div>
           <span className="text-xs text-white">Tables</span>
         </button>
 
-        <button
-          onClick={() => router.push('/checkout')}
-          className="flex flex-col items-center gap-1"
-        >
+        <button onClick={() => router.push('/checkout')} className="flex flex-col items-center gap-1">
           <div className="text-3xl">🎟️</div>
           <span className="text-xs text-white">Book</span>
         </button>
@@ -60,7 +81,7 @@ function VenueSlide({ venue }: { venue: any }) {
         </button>
       </div>
 
-      {/* Bottom venue info */}
+      {/* Bottom info */}
       <div
         className="absolute bottom-0 left-0 right-0 px-4 pb-28 z-10"
         onClick={() => router.push(`/venues/${venue.slug}`)}
@@ -89,14 +110,20 @@ function VenueCard({ venue }: { venue: any }) {
       className="block bg-gray-900 rounded-2xl overflow-hidden hover:opacity-90 transition cursor-pointer"
     >
       <div className="relative w-full h-48">
-        <video
-          src={venue.video}
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
+        {venue.video ? (
+          <video
+            src={venue.video}
+            className="w-full h-full object-cover"
+            autoPlay muted loop playsInline
+            poster={venue.cover}
+          />
+        ) : (
+          <img
+            src={venue.cover}
+            alt={venue.name}
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
       <div className="p-4">
         <span className="text-xs bg-white text-black px-2 py-1 rounded">{venue.type}</span>
@@ -127,19 +154,19 @@ export default function VenuesPage() {
   if (isMobile) {
     return (
       <div className="h-screen overflow-hidden flex flex-col">
-        {/* Floating header */}
         <header className="absolute top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-white drop-shadow">Venues</h1>
         </header>
 
-        {/* Floating filters */}
         <div className="absolute top-14 left-0 right-0 z-50 flex gap-2 px-4 overflow-x-auto pb-1">
           {FILTERS.map(f => (
             <button
               key={f}
               onClick={() => setFilter(f)}
               className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition ${
-                filter === f ? 'bg-white text-black' : 'bg-black/50 text-white border border-white/30'
+                filter === f
+                  ? 'bg-white text-black'
+                  : 'bg-black/50 text-white border border-white/30'
               }`}
             >
               {f}
@@ -147,7 +174,6 @@ export default function VenuesPage() {
           ))}
         </div>
 
-        {/* TikTok scroll */}
         <div
           className="flex-1 overflow-y-scroll snap-y snap-mandatory"
           style={{ scrollbarWidth: 'none' }}

@@ -24,7 +24,11 @@ export default function VenuePage() {
         <button onClick={() => router.back()} className="text-2xl">←</button>
       </header>
 
-      <img src={venue.cover} alt={venue.name} className="w-full h-64 object-cover" />
+      <img
+        src={venue.detail || venue.cover}
+        alt={venue.name}
+        className="w-full h-64 object-cover"
+      />
 
       <div className="px-6 py-6">
         <div className="flex items-start gap-4 mb-4">
