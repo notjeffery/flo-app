@@ -7,7 +7,7 @@ export const VENUES = [
     description: 'Where the real party people gather. Premium nightlife experience. Lagos most exclusive club.',
     address: 'Victoria Island, Lagos',
     cover: '/events/bayrock.jpeg',
-    video: '/events/bayrock.mp4',
+    video: null,
     logo: '/events/bayrock.jpeg',
     followers: 22100,
     instagram: '@bayrock.ng',
