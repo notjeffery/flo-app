@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { VENUES } from '@/lib/venues'
 import BottomNav from '../components/BottomNav'
 
@@ -17,14 +16,25 @@ function VenueSlide({ venue }: { venue: any }) {
   return (
     <div className="relative w-full h-screen flex-shrink-0 snap-start overflow-hidden bg-black">
 
-      {/* Show video if available, otherwise show image */}
       {venue.video ? (
-        <video
-          src={venue.video}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay muted loop playsInline
-          poster={venue.cover}
-        />
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src={venue.cover}
+            alt={venue.name}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <video
+            src={venue.video}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
+            style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+          />
+        </div>
       ) : (
         <>
           <img
@@ -64,17 +74,14 @@ function VenueSlide({ venue }: { venue: any }) {
           </div>
           <span className="text-xs text-white">{following ? 'Following' : 'Follow'}</span>
         </button>
-
         <button onClick={() => router.push(`/venues/${venue.slug}`)} className="flex flex-col items-center gap-1">
           <div className="text-3xl">🪑</div>
           <span className="text-xs text-white">Tables</span>
         </button>
-
         <button onClick={() => router.push('/checkout')} className="flex flex-col items-center gap-1">
           <div className="text-3xl">🎟️</div>
           <span className="text-xs text-white">Book</span>
         </button>
-
         <button className="flex flex-col items-center gap-1">
           <div className="text-3xl">↗️</div>
           <span className="text-xs text-white">Share</span>
@@ -86,14 +93,10 @@ function VenueSlide({ venue }: { venue: any }) {
         className="absolute bottom-0 left-0 right-0 px-4 pb-28 z-10"
         onClick={() => router.push(`/venues/${venue.slug}`)}
       >
-        <span className="text-xs bg-white text-black px-2 py-1 rounded mb-2 inline-block">
-          {venue.type}
-        </span>
+        <span className="text-xs bg-white text-black px-2 py-1 rounded mb-2 inline-block">{venue.type}</span>
         <h2 className="text-2xl font-bold text-white mb-1">{venue.name}</h2>
         <p className="text-sm text-gray-300 mb-1">📍 {venue.address}</p>
-        <p className="text-sm text-gray-300 mb-2">
-          {venue.followers.toLocaleString()} followers · {venue.instagram}
-        </p>
+        <p className="text-sm text-gray-300 mb-2">{venue.followers.toLocaleString()} followers · {venue.instagram}</p>
         <p className="text-sm text-gray-400">{venue.description}</p>
         <p className="text-xs text-gray-400 mt-2 animate-bounce">Swipe up for next venue ↑</p>
       </div>
@@ -111,12 +114,21 @@ function VenueCard({ venue }: { venue: any }) {
     >
       <div className="relative w-full h-48">
         {venue.video ? (
-          <video
-            src={venue.video}
-            className="w-full h-full object-cover"
-            autoPlay muted loop playsInline
-            poster={venue.cover}
-          />
+          <div className="w-full h-full">
+            <img
+              src={venue.cover}
+              alt={venue.name}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <video
+              src={venue.video}
+              className="absolute inset-0 w-full h-full object-cover"
+              autoPlay muted loop playsInline
+              preload="none"
+              onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
+              style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+            />
+          </div>
         ) : (
           <img
             src={venue.cover}
@@ -150,7 +162,6 @@ export default function VenuesPage() {
     ? VENUES
     : VENUES.filter(v => v.type === filter)
 
-  // MOBILE - TikTok snap scroll
   if (isMobile) {
     return (
       <div className="h-screen overflow-hidden flex flex-col">
@@ -164,9 +175,7 @@ export default function VenuesPage() {
               key={f}
               onClick={() => setFilter(f)}
               className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition ${
-                filter === f
-                  ? 'bg-white text-black'
-                  : 'bg-black/50 text-white border border-white/30'
+                filter === f ? 'bg-white text-black' : 'bg-black/50 text-white border border-white/30'
               }`}
             >
               {f}
@@ -174,10 +183,7 @@ export default function VenuesPage() {
           ))}
         </div>
 
-        <div
-          className="flex-1 overflow-y-scroll snap-y snap-mandatory"
-          style={{ scrollbarWidth: 'none' }}
-        >
+        <div className="flex-1 overflow-y-scroll snap-y snap-mandatory" style={{ scrollbarWidth: 'none' }}>
           {filtered.map(venue => (
             <VenueSlide key={venue.id} venue={venue} />
           ))}
@@ -188,7 +194,6 @@ export default function VenuesPage() {
     )
   }
 
-  // DESKTOP - Grid layout
   return (
     <div className="min-h-screen pb-20">
       <header className="sticky top-0 z-50 bg-black border-b border-gray-800 px-6 py-4">

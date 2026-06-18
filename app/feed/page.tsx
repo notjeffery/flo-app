@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { EVENTS } from '@/lib/events'
@@ -22,7 +22,6 @@ type Event = {
   video?: string
 }
 
-// MOBILE - TikTok full screen slide
 function EventSlide({ event }: { event: Event }) {
   const router = useRouter()
   const [mediaIndex, setMediaIndex] = useState(0)
@@ -48,12 +47,27 @@ function EventSlide({ event }: { event: Event }) {
 
   return (
     <div className="relative w-full h-screen flex-shrink-0 snap-start overflow-hidden bg-black">
+
+      {/* Media */}
       {isVideo ? (
-        <video
-          src={event.video}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay muted loop playsInline preload="auto"
-        />
+        <div className="absolute inset-0 w-full h-full">
+          <img
+            src={event.image}
+            alt={event.name}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <video
+            src={event.video}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
+            style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+          />
+        </div>
       ) : (
         <img
           src={currentMedia}
@@ -86,7 +100,9 @@ function EventSlide({ event }: { event: Event }) {
       {/* Right actions */}
       <div className="absolute right-3 bottom-36 flex flex-col items-center gap-5 z-10">
         <button onClick={() => setInterested(!interested)} className="flex flex-col items-center gap-1">
-          <div className={`text-3xl transition ${interested ? 'scale-125' : ''}`}>{interested ? '❤️' : '🤍'}</div>
+          <div className={`text-3xl transition ${interested ? 'scale-125' : ''}`}>
+            {interested ? '❤️' : '🤍'}
+          </div>
           <span className="text-xs text-white">{interested ? 'Interested' : 'Interest'}</span>
         </button>
         <button onClick={() => router.push(`/events/${event.slug}/attendees`)} className="flex flex-col items-center gap-1">
@@ -120,7 +136,6 @@ function EventSlide({ event }: { event: Event }) {
   )
 }
 
-// DESKTOP - Clean card feed
 function EventCard({ event }: { event: Event }) {
   const router = useRouter()
   const [mediaIndex, setMediaIndex] = useState(0)
@@ -147,7 +162,21 @@ function EventCard({ event }: { event: Event }) {
     <Link href={`/events/${event.slug}`} className="block bg-gray-900 rounded-2xl overflow-hidden hover:opacity-90 transition">
       <div className="relative w-full h-80">
         {isVideo ? (
-          <video src={event.video} className="w-full h-full object-cover" autoPlay muted loop playsInline />
+          <div className="w-full h-full">
+            <img
+              src={event.image}
+              alt={event.name}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <video
+              src={event.video}
+              className="absolute inset-0 w-full h-full object-cover"
+              autoPlay muted loop playsInline
+              preload="none"
+              onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
+              style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
+            />
+          </div>
         ) : (
           <img src={currentMedia} alt={event.name} className="w-full h-full object-cover" />
         )}
@@ -194,32 +223,26 @@ export default function FeedPage() {
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  // MOBILE LAYOUT
   if (isMobile) {
     return (
       <div className="h-screen overflow-hidden flex flex-col">
-        {/* Floating header */}
         <header className="absolute top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center">
           <img src="/flo-logo.webp" alt="flo" className="h-7 object-contain" />
           <Link href="/profile" className="text-2xl">👤</Link>
         </header>
 
-        {/* Floating tabs */}
         <div className="absolute top-14 left-0 right-0 z-50 flex justify-center gap-6">
           {TABS.map((t, i) => (
             <button
               key={t}
               onClick={() => setTab(i)}
-              className={`text-sm font-semibold pb-1 transition ${
-                tab === i ? 'text-white border-b-2 border-white' : 'text-white/50'
-              }`}
+              className={`text-sm font-semibold pb-1 transition ${tab === i ? 'text-white border-b-2 border-white' : 'text-white/50'}`}
             >
               {t}
             </button>
           ))}
         </div>
 
-        {/* TikTok scroll */}
         <div className="flex-1 overflow-y-scroll snap-y snap-mandatory" style={{ scrollbarWidth: 'none' }}>
           {EVENTS.map(event => (
             <EventSlide key={event.id} event={event as Event} />
@@ -231,7 +254,6 @@ export default function FeedPage() {
     )
   }
 
-  // DESKTOP LAYOUT
   return (
     <div className="min-h-screen pb-20">
       <header className="sticky top-0 z-50 bg-black border-b border-gray-800">
@@ -244,9 +266,7 @@ export default function FeedPage() {
             <button
               key={t}
               onClick={() => setTab(i)}
-              className={`flex-1 py-3 text-sm font-semibold transition ${
-                tab === i ? 'border-b-2 border-white' : 'text-gray-400'
-              }`}
+              className={`flex-1 py-3 text-sm font-semibold transition ${tab === i ? 'border-b-2 border-white' : 'text-gray-400'}`}
             >
               {t}
             </button>
