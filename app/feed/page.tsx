@@ -50,24 +50,14 @@ function EventSlide({ event }: { event: Event }) {
 
       {/* Media */}
       {isVideo ? (
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src={event.image}
-            alt={event.name}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <video
-            src={event.video}
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
-            style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
-          />
-        </div>
+        <video
+          src={event.video}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
       ) : (
         <img
           src={currentMedia}
@@ -162,21 +152,11 @@ function EventCard({ event }: { event: Event }) {
     <Link href={`/events/${event.slug}`} className="block bg-gray-900 rounded-2xl overflow-hidden hover:opacity-90 transition">
       <div className="relative w-full h-80">
         {isVideo ? (
-          <div className="w-full h-full">
-            <img
-              src={event.image}
-              alt={event.name}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <video
-              src={event.video}
-              className="absolute inset-0 w-full h-full object-cover"
-              autoPlay muted loop playsInline
-              preload="none"
-              onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
-              style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
-            />
-          </div>
+          <video
+            src={event.video}
+            className="w-full h-full object-cover"
+            autoPlay muted loop playsInline
+          />
         ) : (
           <img src={currentMedia} alt={event.name} className="w-full h-full object-cover" />
         )}

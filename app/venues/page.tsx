@@ -17,24 +17,14 @@ function VenueSlide({ venue }: { venue: any }) {
     <div className="relative w-full h-screen flex-shrink-0 snap-start overflow-hidden bg-black">
 
       {venue.video ? (
-        <div className="absolute inset-0 w-full h-full">
-          <img
-            src={venue.cover}
-            alt={venue.name}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <video
-            src={venue.video}
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
-            style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
-          />
-        </div>
+        <video
+          src={venue.video}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
       ) : (
         <>
           <img
@@ -114,21 +104,11 @@ function VenueCard({ venue }: { venue: any }) {
     >
       <div className="relative w-full h-48">
         {venue.video ? (
-          <div className="w-full h-full">
-            <img
-              src={venue.cover}
-              alt={venue.name}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <video
-              src={venue.video}
-              className="absolute inset-0 w-full h-full object-cover"
-              autoPlay muted loop playsInline
-              preload="none"
-              onCanPlay={(e) => (e.currentTarget.style.opacity = '1')}
-              style={{ opacity: 0, transition: 'opacity 0.5s ease' }}
-            />
-          </div>
+          <video
+            src={venue.video}
+            className="w-full h-full object-cover"
+            autoPlay muted loop playsInline
+          />
         ) : (
           <img
             src={venue.cover}
