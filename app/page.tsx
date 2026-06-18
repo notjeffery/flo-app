@@ -35,9 +35,9 @@ export default function Home() {
         style={{
           transform:
             phase === 'zoom'
-              ? 'scale(15) translate(-30px, 0px)'
+              ? 'scale(15) translate(-24px, 0px)'
               : phase === 'black'
-              ? 'scale(40) translate(-30px, 0px)'
+              ? 'scale(40) translate(-24px, 0px)'
               : 'scale(1)',
           transition:
             phase === 'zoom'
